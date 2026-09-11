@@ -123,7 +123,7 @@ export default function SurveyResultsAnalyticsPage() {
   if (!results) return null;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
       <Header />
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
@@ -132,29 +132,29 @@ export default function SurveyResultsAnalyticsPage() {
         <div className="space-y-4">
           <Link
             href="/admin/dashboard"
-            className="inline-flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-white"
+            className="inline-flex items-center gap-2 text-xs font-medium text-zinc-400 hover:text-zinc-100 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Dashboard</span>
           </Link>
 
-          <div className="glass-card rounded-2xl p-6 sm:p-8 space-y-4 border border-indigo-500/20 bg-slate-900/80">
+          <div className="card-minimal rounded-xl p-6 sm:p-8 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
-                <span className="text-xs uppercase font-semibold tracking-wider text-indigo-400">
-                  Survey Response Analytics
+                <span className="text-xs uppercase font-mono text-zinc-400">
+                  Response Analytics
                 </span>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                <h1 className="text-2xl font-bold text-zinc-100 tracking-tight">
                   {results.title}
                 </h1>
-                <p className="text-xs sm:text-sm text-slate-400 mt-1">{results.description}</p>
+                <p className="text-xs sm:text-sm text-zinc-400 mt-1">{results.description}</p>
               </div>
 
-              <div className="flex items-center gap-3 bg-slate-950/80 px-5 py-3 rounded-2xl border border-slate-800 shrink-0">
-                <Users className="w-6 h-6 text-indigo-400" />
+              <div className="flex items-center gap-3 bg-zinc-950 px-4 py-2.5 rounded-xl border border-zinc-800 shrink-0">
+                <Users className="w-5 h-5 text-zinc-400" />
                 <div>
-                  <span className="block text-2xl font-black text-white">{results.totalSubmissions}</span>
-                  <span className="block text-[10px] text-slate-400 uppercase font-semibold">Total Submissions</span>
+                  <span className="block text-xl font-bold text-zinc-100">{results.totalSubmissions}</span>
+                  <span className="block text-[10px] text-zinc-500 uppercase font-mono">Total Submissions</span>
                 </div>
               </div>
             </div>
@@ -162,21 +162,21 @@ export default function SurveyResultsAnalyticsPage() {
         </div>
 
         {/* Questions Results Distribution */}
-        <div className="space-y-8">
+        <div className="space-y-6">
           {results.questionResults.map((q, idx) => (
             <div
               key={q.questionId || idx}
-              className="glass-card rounded-2xl p-6 sm:p-8 space-y-6 border border-slate-800 bg-slate-900/70"
+              className="card-minimal rounded-xl p-6 space-y-6"
             >
               <div className="flex items-start gap-3">
-                <span className="flex items-center justify-center w-7 h-7 rounded-xl bg-indigo-600/20 text-indigo-400 text-xs font-bold shrink-0 mt-0.5 border border-indigo-500/30">
+                <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-zinc-800 text-zinc-200 text-xs font-mono font-bold shrink-0 mt-0.5 border border-zinc-700">
                   Q{idx + 1}
                 </span>
                 <div>
-                  <h3 className="font-bold text-white text-base leading-snug">
+                  <h3 className="font-semibold text-zinc-100 text-base leading-snug">
                     {q.questionText}
                   </h3>
-                  <span className="text-[11px] text-slate-500 font-mono uppercase mt-0.5 block">
+                  <span className="text-[11px] text-zinc-500 font-mono uppercase mt-0.5 block">
                     Type: {q.type}
                   </span>
                 </div>
@@ -188,17 +188,17 @@ export default function SurveyResultsAnalyticsPage() {
                   {q.optionResults.map((opt) => (
                     <div key={opt.optionId} className="space-y-1.5">
                       <div className="flex items-center justify-between text-xs font-medium">
-                        <span className="text-slate-200">{opt.optionText}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-indigo-400 font-bold">{opt.count} votes</span>
-                          <span className="text-slate-400 text-[11px]">({opt.percentage}%)</span>
+                        <span className="text-zinc-200">{opt.optionText}</span>
+                        <div className="flex items-center gap-2 font-mono">
+                          <span className="text-zinc-100 font-semibold">{opt.count} votes</span>
+                          <span className="text-zinc-500 text-[11px]">({opt.percentage}%)</span>
                         </div>
                       </div>
                       
                       {/* Bar Progress Track */}
-                      <div className="w-full h-3 rounded-full bg-slate-950 overflow-hidden p-0.5 border border-slate-800">
+                      <div className="w-full h-2.5 rounded-full bg-zinc-950 overflow-hidden border border-zinc-800">
                         <div
-                          className="h-full rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-500"
+                          className="h-full rounded-full bg-zinc-100 transition-all duration-300"
                           style={{ width: `${Math.max(opt.percentage, 2)}%` }}
                         />
                       </div>
@@ -210,15 +210,15 @@ export default function SurveyResultsAnalyticsPage() {
               {/* Text Answers Feed */}
               {q.type === "TEXT" && (
                 <div className="space-y-3 pt-2">
-                  <div className="flex items-center justify-between text-xs text-slate-400">
-                    <span>Written Citizen Submissions ({q.textAnswers.length})</span>
+                  <div className="flex items-center justify-between text-xs text-zinc-400 font-mono">
+                    <span>Citizen Comments ({q.textAnswers.length})</span>
                   </div>
 
                   <div className="space-y-2.5 max-h-60 overflow-y-auto pr-1">
                     {q.textAnswers.map((text, tIdx) => (
                       <div
                         key={tIdx}
-                        className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 italic leading-relaxed"
+                        className="p-3 rounded-lg bg-zinc-950 border border-zinc-800 text-xs text-zinc-300 italic leading-relaxed"
                       >
                         "{text}"
                       </div>

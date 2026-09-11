@@ -12,18 +12,34 @@ export default function Header() {
   const roles = session?.roles || [];
   const isAdmin = roles.includes("ROLE_ADMIN") || roles.includes("ADMIN");
 
+  const handleLogout = async () => {
+    const idToken = session?.idToken;
+    await signOut({ redirect: false });
+
+    const issuer = process.env.NEXT_PUBLIC_KEYCLOAK_ISSUER || "http://localhost:8080/realms/my-ecosystem";
+    const clientId = process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID || "survey-frontend";
+    const postLogoutRedirectUri = encodeURIComponent(window.location.origin);
+
+    let logoutUrl = `${issuer}/protocol/openid-connect/logout?post_logout_redirect_uri=${postLogoutRedirectUri}&client_id=${clientId}`;
+    if (idToken) {
+      logoutUrl += `&id_token_hint=${idToken}`;
+    }
+
+    window.location.href = logoutUrl;
+  };
+
   return (
-    <header className="sticky top-0 z-50 glass-card border-b border-slate-800/80 bg-slate-900/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="p-2.5 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-pink-500 text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-200">
+          <div className="p-2 rounded-lg bg-zinc-800 text-zinc-100 border border-zinc-700">
             <Vote className="w-5 h-5" />
           </div>
           <div>
-            <span className="font-bold text-xl tracking-tight gradient-text">UtilitySurvey</span>
-            <span className="block text-[10px] uppercase font-semibold tracking-wider text-slate-400 -mt-1">
+            <span className="font-bold text-lg tracking-tight text-zinc-100">UtilitySurvey</span>
+            <span className="block text-[10px] uppercase font-mono tracking-wider text-zinc-500 -mt-1">
               Citizen Platform
             </span>
           </div>
@@ -33,10 +49,10 @@ export default function Header() {
         <nav className="hidden md:flex items-center gap-1">
           <Link
             href="/"
-            className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               pathname === "/"
-                ? "bg-indigo-600/20 text-indigo-400 border border-indigo-500/30"
-                : "text-slate-300 hover:text-white hover:bg-slate-800/60"
+                ? "bg-zinc-800 text-zinc-100 border border-zinc-700"
+                : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900"
             }`}
           >
             Home Feed
@@ -46,35 +62,35 @@ export default function Header() {
             <>
               <Link
                 href="/admin/dashboard"
-                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   pathname.startsWith("/admin/dashboard")
-                    ? "bg-indigo-600/20 text-indigo-400 border border-indigo-500/30"
-                    : "text-slate-300 hover:text-white hover:bg-slate-800/60"
+                    ? "bg-zinc-800 text-zinc-100 border border-zinc-700"
+                    : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900"
                 }`}
               >
-                <LayoutDashboard className="w-4 h-4" />
+                <LayoutDashboard className="w-3.5 h-3.5" />
                 Dashboard
               </Link>
               <Link
                 href="/admin/users"
-                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   pathname.startsWith("/admin/users")
-                    ? "bg-indigo-600/20 text-indigo-400 border border-indigo-500/30"
-                    : "text-slate-300 hover:text-white hover:bg-slate-800/60"
+                    ? "bg-zinc-800 text-zinc-100 border border-zinc-700"
+                    : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900"
                 }`}
               >
-                <Users className="w-4 h-4" />
+                <Users className="w-3.5 h-3.5" />
                 Citizens
               </Link>
               <Link
                 href="/admin/surveys/new"
-                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   pathname === "/admin/surveys/new"
-                    ? "bg-indigo-600/20 text-indigo-400 border border-indigo-500/30"
-                    : "text-slate-300 hover:text-white hover:bg-slate-800/60"
+                    ? "bg-zinc-800 text-zinc-100 border border-zinc-700"
+                    : "text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900"
                 }`}
               >
-                <PlusCircle className="w-4 h-4 text-emerald-400" />
+                <PlusCircle className="w-3.5 h-3.5 text-zinc-300" />
                 New Survey
               </Link>
             </>
@@ -84,21 +100,21 @@ export default function Header() {
         {/* User Auth Section */}
         <div className="flex items-center gap-3">
           {status === "loading" ? (
-            <div className="h-9 w-24 bg-slate-800 animate-pulse rounded-lg" />
+            <div className="h-8 w-20 bg-zinc-900 animate-pulse rounded-lg border border-zinc-800" />
           ) : session ? (
             <div className="flex items-center gap-3">
-              <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800/80 border border-slate-700/60">
-                <div className="p-1 rounded-full bg-slate-700 text-slate-300">
+              <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-lg bg-zinc-900 border border-zinc-800">
+                <div className="p-1 rounded-md bg-zinc-800 text-zinc-400">
                   <UserIcon className="w-3.5 h-3.5" />
                 </div>
                 <div className="text-left">
-                  <span className="block text-xs font-medium text-slate-200">
+                  <span className="block text-xs font-medium text-zinc-200">
                     {session.user?.name || session.user?.email || "Authenticated User"}
                   </span>
-                  <span className="flex items-center gap-1 text-[10px] text-slate-400">
+                  <span className="flex items-center gap-1 text-[10px] text-zinc-500">
                     {isAdmin ? (
-                      <span className="text-amber-400 flex items-center gap-0.5 font-semibold">
-                        <Shield className="w-3 h-3" /> ADMIN
+                      <span className="text-zinc-300 flex items-center gap-0.5 font-semibold">
+                        <Shield className="w-3 h-3 text-zinc-400" /> ADMIN
                       </span>
                     ) : (
                       <span>CITIZEN</span>
@@ -108,8 +124,8 @@ export default function Header() {
               </div>
 
               <button
-                onClick={() => signOut({ callbackUrl: "/" })}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-300 hover:text-rose-400 bg-slate-800/60 hover:bg-rose-500/10 border border-slate-700/50 hover:border-rose-500/30 rounded-lg transition-all"
+                onClick={handleLogout}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-zinc-400 hover:text-zinc-100 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg transition-colors"
                 title="Sign Out"
               >
                 <LogOut className="w-3.5 h-3.5" />
@@ -119,10 +135,10 @@ export default function Header() {
           ) : (
             <button
               onClick={() => signIn("keycloak")}
-              className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white gradient-btn rounded-xl shadow-lg shadow-indigo-600/20"
+              className="flex items-center gap-2 px-3.5 py-1.5 text-xs btn-primary rounded-lg"
             >
               <LogIn className="w-4 h-4" />
-              Sign In with Keycloak
+              Sign In
             </button>
           )}
         </div>

@@ -175,7 +175,7 @@ export default function NewSurveyBuilderPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
       <Header />
 
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
@@ -184,18 +184,18 @@ export default function NewSurveyBuilderPage() {
         <div className="flex items-center justify-between">
           <Link
             href="/admin/dashboard"
-            className="inline-flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-white"
+            className="inline-flex items-center gap-2 text-xs font-medium text-zinc-400 hover:text-zinc-100 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Dashboard</span>
           </Link>
-          <span className="text-xs uppercase font-semibold text-amber-400">
-            Interactive Survey Builder
+          <span className="text-xs uppercase font-mono text-zinc-400">
+            Survey Builder
           </span>
         </div>
 
         {errorMsg && (
-          <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-semibold">
+          <div className="p-4 rounded-xl bg-red-950/60 border border-red-900 text-red-300 text-xs font-medium">
             {errorMsg}
           </div>
         )}
@@ -203,13 +203,13 @@ export default function NewSurveyBuilderPage() {
         <form onSubmit={handleSubmit} className="space-y-8">
           
           {/* Survey Metadata Section */}
-          <div className="glass-card rounded-2xl p-6 sm:p-8 space-y-6 border border-indigo-500/20 bg-slate-900/80">
-            <h2 className="text-xl font-bold text-white">Survey Metadata</h2>
+          <div className="card-minimal rounded-xl p-6 sm:p-8 space-y-6">
+            <h2 className="text-lg font-semibold text-zinc-100">Survey Metadata</h2>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Survey Title <span className="text-rose-400">*</span>
+                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                  Survey Title <span className="text-red-400">*</span>
                 </label>
                 <input
                   type="text"
@@ -217,12 +217,12 @@ export default function NewSurveyBuilderPage() {
                   placeholder="e.g. Annual Municipal Water Quality Survey 2026"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-600"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
                   Survey Description
                 </label>
                 <textarea
@@ -230,15 +230,15 @@ export default function NewSurveyBuilderPage() {
                   placeholder="Provide background context and objectives for citizens..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full p-4 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 resize-none"
+                  className="w-full p-3.5 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-600 resize-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
                   Initial Status
                 </label>
-                <div className="flex items-center gap-3 text-xs">
+                <div className="flex items-center gap-4 text-xs">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="radio"
@@ -246,9 +246,9 @@ export default function NewSurveyBuilderPage() {
                       value="DRAFT"
                       checked={status === "DRAFT"}
                       onChange={() => setStatus("DRAFT")}
-                      className="accent-indigo-500"
+                      className="accent-zinc-100"
                     />
-                    <span className="text-slate-300">Draft (Private)</span>
+                    <span className="text-zinc-300">Draft (Private)</span>
                   </label>
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -257,9 +257,9 @@ export default function NewSurveyBuilderPage() {
                       value="PUBLISHED"
                       checked={status === "PUBLISHED"}
                       onChange={() => setStatus("PUBLISHED")}
-                      className="accent-indigo-500"
+                      className="accent-zinc-100"
                     />
-                    <span className="text-emerald-400 font-semibold">Publish Immediately</span>
+                    <span className="text-zinc-100 font-semibold">Publish Immediately</span>
                   </label>
                 </div>
               </div>
@@ -269,11 +269,11 @@ export default function NewSurveyBuilderPage() {
           {/* Dynamic Questions Builder List */}
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-white">Dynamic Questions ({questions.length})</h2>
+              <h2 className="text-base font-semibold text-zinc-100">Dynamic Questions ({questions.length})</h2>
               <button
                 type="button"
                 onClick={handleAddQuestion}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 text-xs font-bold hover:bg-indigo-600/30 transition-all"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg btn-secondary text-xs"
               >
                 <Plus className="w-4 h-4" />
                 Add Question
@@ -283,15 +283,15 @@ export default function NewSurveyBuilderPage() {
             {questions.map((question, qIdx) => (
               <div
                 key={question.id}
-                className="glass-card rounded-2xl p-6 space-y-5 border border-slate-800 bg-slate-900/60"
+                className="card-minimal rounded-xl p-6 space-y-5 bg-zinc-900/60"
               >
                 {/* Question Header & Order Controls */}
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-1 rounded-lg bg-indigo-600/20 text-indigo-400 text-xs font-extrabold border border-indigo-500/30">
+                    <span className="px-2.5 py-0.5 rounded-md bg-zinc-800 text-zinc-200 text-xs font-mono font-semibold border border-zinc-700">
                       Q{qIdx + 1}
                     </span>
-                    <span className="text-xs text-slate-400 font-medium">Question Config</span>
+                    <span className="text-xs text-zinc-400 font-medium">Question Config</span>
                   </div>
 
                   <div className="flex items-center gap-1">
@@ -299,7 +299,7 @@ export default function NewSurveyBuilderPage() {
                       type="button"
                       disabled={qIdx === 0}
                       onClick={() => handleMoveQuestion(qIdx, "UP")}
-                      className="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white disabled:opacity-30"
+                      className="p-1.5 rounded-lg bg-zinc-800 text-zinc-400 hover:text-zinc-100 disabled:opacity-30 border border-zinc-700"
                       title="Move Up"
                     >
                       <MoveUp className="w-3.5 h-3.5" />
@@ -308,7 +308,7 @@ export default function NewSurveyBuilderPage() {
                       type="button"
                       disabled={qIdx === questions.length - 1}
                       onClick={() => handleMoveQuestion(qIdx, "DOWN")}
-                      className="p-1.5 rounded-lg bg-slate-800 text-slate-400 hover:text-white disabled:opacity-30"
+                      className="p-1.5 rounded-lg bg-zinc-800 text-zinc-400 hover:text-zinc-100 disabled:opacity-30 border border-zinc-700"
                       title="Move Down"
                     >
                       <MoveDown className="w-3.5 h-3.5" />
@@ -316,7 +316,7 @@ export default function NewSurveyBuilderPage() {
                     <button
                       type="button"
                       onClick={() => handleRemoveQuestion(qIdx)}
-                      className="p-1.5 rounded-lg bg-rose-500/10 text-rose-400 hover:bg-rose-500/20 border border-rose-500/30 ml-2"
+                      className="p-1.5 rounded-lg bg-zinc-800 hover:bg-red-950/60 text-zinc-400 hover:text-red-400 border border-zinc-700 ml-2"
                       title="Delete Question"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -327,23 +327,23 @@ export default function NewSurveyBuilderPage() {
                 {/* Question Text & Type Selector */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="md:col-span-2">
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Question Prompt</label>
+                    <label className="block text-xs font-medium text-zinc-300 mb-1">Question Prompt</label>
                     <input
                       type="text"
                       required
                       placeholder="e.g. How satisfied are you with water pressure?"
                       value={question.questionText}
                       onChange={(e) => handleQuestionTextChange(qIdx, e.target.value)}
-                      className="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-600"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">Response Type</label>
+                    <label className="block text-xs font-medium text-zinc-300 mb-1">Response Type</label>
                     <select
                       value={question.type}
                       onChange={(e) => handleQuestionTypeChange(qIdx, e.target.value as any)}
-                      className="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-100 focus:outline-none focus:border-zinc-600"
                     >
                       <option value="SINGLE_CHOICE">Single Choice (Radio)</option>
                       <option value="MULTIPLE_CHOICE">Multiple Choice (Checkboxes)</option>
@@ -356,11 +356,11 @@ export default function NewSurveyBuilderPage() {
                 {question.type !== "TEXT" && (
                   <div className="space-y-3 pt-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-semibold text-slate-400">Options</span>
+                      <span className="text-xs font-medium text-zinc-400">Options</span>
                       <button
                         type="button"
                         onClick={() => handleAddOption(qIdx)}
-                        className="text-[11px] font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1"
+                        className="text-[11px] font-semibold text-zinc-300 hover:text-white flex items-center gap-1"
                       >
                         <Plus className="w-3 h-3" /> Add Option
                       </button>
@@ -374,12 +374,12 @@ export default function NewSurveyBuilderPage() {
                             required
                             value={opt.optionText}
                             onChange={(e) => handleOptionTextChange(qIdx, oIdx, e.target.value)}
-                            className="flex-1 px-3 py-1.5 bg-slate-950 border border-slate-800 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-indigo-500"
+                            className="flex-1 px-3 py-1.5 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-200 focus:outline-none focus:border-zinc-600"
                           />
                           <button
                             type="button"
                             onClick={() => handleRemoveOption(qIdx, oIdx)}
-                            className="p-1.5 text-slate-500 hover:text-rose-400"
+                            className="p-1.5 text-zinc-500 hover:text-red-400"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -393,17 +393,17 @@ export default function NewSurveyBuilderPage() {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-end gap-4 pt-4">
+          <div className="flex items-center justify-end gap-3 pt-4">
             <Link
               href="/admin/dashboard"
-              className="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold"
+              className="px-4 py-2 rounded-lg btn-secondary text-xs"
             >
               Cancel
             </Link>
             <button
               type="submit"
               disabled={saving}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl gradient-btn text-white text-xs font-bold shadow-lg shadow-indigo-600/30 disabled:opacity-50"
+              className="flex items-center gap-2 px-5 py-2 rounded-lg btn-primary text-xs font-semibold disabled:opacity-50"
             >
               <Save className="w-4 h-4" />
               <span>Save & Publish Survey</span>

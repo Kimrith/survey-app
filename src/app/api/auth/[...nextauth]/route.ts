@@ -22,13 +22,19 @@ export const authOptions: NextAuthOptions = {
     KeycloakProvider({
       clientId: process.env.KEYCLOAK_CLIENT_ID || "survey-frontend",
       clientSecret: process.env.KEYCLOAK_CLIENT_SECRET || "",
-      issuer: process.env.KEYCLOAK_ISSUER || "http://localhost:8080/realms/survey-realm",
+      issuer: process.env.KEYCLOAK_ISSUER || "http://localhost:8080/realms/my-ecosystem",
+      authorization: {
+        params: {
+          prompt: "login",
+        },
+      },
     }),
   ],
   callbacks: {
     async jwt({ token, account }) {
       if (account && account.access_token) {
         token.accessToken = account.access_token;
+        token.idToken = account.id_token;
         const decoded = parseJwt(account.access_token);
         const roles = decoded?.realm_access?.roles || [];
         token.roles = roles;
@@ -37,6 +43,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken as string;
+      session.idToken = token.idToken as string;
       session.roles = (token.roles as string[]) || [];
       return session;
     },

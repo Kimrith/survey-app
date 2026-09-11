@@ -225,7 +225,7 @@ export default function SurveySubmissionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
       <Header />
 
       <main className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
@@ -233,22 +233,22 @@ export default function SurveySubmissionPage() {
         {/* Navigation Back */}
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-xs font-medium text-slate-400 hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-medium text-zinc-400 hover:text-zinc-100 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Home Feed</span>
         </Link>
 
         {/* Survey Header */}
-        <div className="glass-card rounded-2xl p-6 sm:p-8 space-y-4 border border-indigo-500/20 bg-slate-900/80">
+        <div className="card-minimal rounded-xl p-6 sm:p-8 space-y-3">
           <div className="space-y-2">
-            <span className="inline-block px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-semibold border border-indigo-500/30">
-              Active Official Survey
+            <span className="inline-block px-2.5 py-0.5 rounded-md bg-zinc-800 text-zinc-300 text-[11px] font-mono border border-zinc-700">
+              OFFICIAL PUBLIC SURVEY
             </span>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl font-bold text-zinc-100 tracking-tight">
               {survey.title}
             </h1>
-            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+            <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
               {survey.description}
             </p>
           </div>
@@ -256,12 +256,12 @@ export default function SurveySubmissionPage() {
 
         {/* Success Banner */}
         {successMsg && (
-          <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/30 p-6 flex items-start gap-4 text-emerald-400 animate-in fade-in slide-in-from-top-4">
-            <CheckCircle2 className="w-6 h-6 shrink-0 mt-0.5" />
+          <div className="rounded-xl bg-zinc-900 border border-zinc-700 p-5 flex items-start gap-4 text-zinc-200">
+            <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5 text-zinc-100" />
             <div className="space-y-1">
-              <h4 className="font-bold text-sm">Response Received!</h4>
-              <p className="text-xs text-emerald-300">{successMsg}</p>
-              <span className="block text-[11px] text-emerald-400/70 pt-1">
+              <h4 className="font-semibold text-sm text-zinc-100">Response Received</h4>
+              <p className="text-xs text-zinc-400">{successMsg}</p>
+              <span className="block text-[11px] text-zinc-500 font-mono pt-1">
                 Redirecting to home feed...
               </span>
             </div>
@@ -270,8 +270,8 @@ export default function SurveySubmissionPage() {
 
         {/* Error Banner */}
         {errorMsg && (
-          <div className="rounded-2xl bg-rose-500/10 border border-rose-500/30 p-4 flex items-center gap-3 text-rose-400 animate-in fade-in">
-            <AlertCircle className="w-5 h-5 shrink-0" />
+          <div className="rounded-xl bg-red-950/60 border border-red-900 p-4 flex items-center gap-3 text-red-300">
+            <AlertCircle className="w-4 h-4 shrink-0" />
             <p className="text-xs font-medium">{errorMsg}</p>
           </div>
         )}
@@ -281,17 +281,17 @@ export default function SurveySubmissionPage() {
           {survey.questions.map((question, qIdx) => (
             <div
               key={question.id}
-              className="glass-card rounded-2xl p-6 space-y-4 border border-slate-800 bg-slate-900/60"
+              className="card-minimal rounded-xl p-6 space-y-4"
             >
               <div className="flex items-start gap-3">
-                <span className="flex items-center justify-center w-7 h-7 rounded-xl bg-indigo-600/20 text-indigo-400 text-xs font-bold shrink-0 mt-0.5 border border-indigo-500/30">
+                <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-zinc-800 text-zinc-200 text-xs font-mono font-bold shrink-0 mt-0.5 border border-zinc-700">
                   Q{qIdx + 1}
                 </span>
                 <div>
-                  <h3 className="font-semibold text-white text-base leading-snug">
+                  <h3 className="font-semibold text-zinc-100 text-base leading-snug">
                     {question.questionText}
                   </h3>
-                  <span className="inline-block text-[11px] text-slate-400 mt-1 uppercase font-medium tracking-wider">
+                  <span className="inline-block text-[11px] text-zinc-500 font-mono uppercase mt-0.5">
                     {question.type === "SINGLE_CHOICE" && "Select One Option"}
                     {question.type === "MULTIPLE_CHOICE" && "Select All That Apply"}
                     {question.type === "TEXT" && "Written Feedback Required"}
@@ -301,25 +301,25 @@ export default function SurveySubmissionPage() {
 
               {/* Single Choice Options */}
               {question.type === "SINGLE_CHOICE" && (
-                <div className="space-y-2.5 pt-2">
+                <div className="space-y-2 pt-2">
                   {question.options.map((option) => {
                     const isSelected = singleAnswers[question.id] === option.id;
                     return (
                       <label
                         key={option.id}
                         onClick={() => handleSingleChoice(question.id, option.id)}
-                        className={`flex items-center gap-3 p-3.5 rounded-xl border cursor-pointer transition-all ${
+                        className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
                           isSelected
-                            ? "bg-indigo-600/20 border-indigo-500 text-white"
-                            : "bg-slate-950/60 border-slate-800 text-slate-300 hover:bg-slate-800/40"
+                            ? "bg-zinc-800 border-zinc-600 text-zinc-100"
+                            : "bg-zinc-950/60 border-zinc-800 text-zinc-300 hover:bg-zinc-900"
                         }`}
                       >
                         <div
                           className={`w-4 h-4 rounded-full border flex items-center justify-center ${
-                            isSelected ? "border-indigo-400 bg-indigo-600" : "border-slate-600"
+                            isSelected ? "border-zinc-300 bg-zinc-100" : "border-zinc-700"
                           }`}
                         >
-                          {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                          {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-zinc-900" />}
                         </div>
                         <span className="text-xs sm:text-sm font-medium">{option.optionText}</span>
                       </label>
@@ -330,25 +330,25 @@ export default function SurveySubmissionPage() {
 
               {/* Multiple Choice Options */}
               {question.type === "MULTIPLE_CHOICE" && (
-                <div className="space-y-2.5 pt-2">
+                <div className="space-y-2 pt-2">
                   {question.options.map((option) => {
                     const isSelected = (multiAnswers[question.id] || []).includes(option.id);
                     return (
                       <label
                         key={option.id}
                         onClick={() => handleMultiChoice(question.id, option.id)}
-                        className={`flex items-center gap-3 p-3.5 rounded-xl border cursor-pointer transition-all ${
+                        className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
                           isSelected
-                            ? "bg-indigo-600/20 border-indigo-500 text-white"
-                            : "bg-slate-950/60 border-slate-800 text-slate-300 hover:bg-slate-800/40"
+                            ? "bg-zinc-800 border-zinc-600 text-zinc-100"
+                            : "bg-zinc-950/60 border-zinc-800 text-zinc-300 hover:bg-zinc-900"
                         }`}
                       >
                         <div
                           className={`w-4 h-4 rounded border flex items-center justify-center ${
-                            isSelected ? "border-indigo-400 bg-indigo-600" : "border-slate-600"
+                            isSelected ? "border-zinc-300 bg-zinc-100" : "border-zinc-700"
                           }`}
                         >
-                          {isSelected && <CheckSquare className="w-3 h-3 text-white" />}
+                          {isSelected && <CheckSquare className="w-3 h-3 text-zinc-900" />}
                         </div>
                         <span className="text-xs sm:text-sm font-medium">{option.optionText}</span>
                       </label>
@@ -365,7 +365,7 @@ export default function SurveySubmissionPage() {
                     placeholder="Type your response here..."
                     value={textAnswers[question.id] || ""}
                     onChange={(e) => handleTextChange(question.id, e.target.value)}
-                    className="w-full p-4 bg-slate-950/80 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none"
+                    className="w-full p-3 bg-zinc-950 border border-zinc-800 rounded-lg text-xs sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-zinc-600 transition-colors resize-none"
                   />
                 </div>
               )}
@@ -373,10 +373,10 @@ export default function SurveySubmissionPage() {
           ))}
 
           {/* Submit Action Button */}
-          <div className="pt-4 flex items-center justify-end gap-4">
+          <div className="pt-2 flex items-center justify-end gap-3">
             <Link
               href="/"
-              className="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold hover:bg-slate-700 transition-all"
+              className="px-4 py-2 rounded-lg btn-secondary text-xs"
             >
               Cancel
             </Link>
@@ -384,16 +384,16 @@ export default function SurveySubmissionPage() {
             <button
               type="submit"
               disabled={submitting || !!successMsg}
-              className="flex items-center gap-2 px-6 py-2.5 rounded-xl gradient-btn text-white text-xs font-bold shadow-lg shadow-indigo-600/30 disabled:opacity-50"
+              className="flex items-center gap-2 px-5 py-2 rounded-lg btn-primary text-xs font-semibold disabled:opacity-50"
             >
               {submitting ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="w-3.5 h-3.5 border-2 border-zinc-900 border-t-transparent rounded-full animate-spin" />
                   <span>Submitting...</span>
                 </>
               ) : (
                 <>
-                  <Send className="w-4 h-4" />
+                  <Send className="w-3.5 h-3.5" />
                   <span>Submit Survey Response</span>
                 </>
               )}
